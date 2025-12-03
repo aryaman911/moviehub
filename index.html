@@ -1,13 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ADP Streaming Portal</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1 style='text-align:center;'>ADP Streaming Portal</h1>
-  <p style='text-align:center;'>Frontend placeholder. Replace with full UI later.</p>
-  <script src="main.js"></script>
+<header>
+  <h1>ADP Streaming Portal</h1>
+  <div class="user-info" id="header-user-label">Not signed in</div>
+</header>
+
+<div class="container">
+
+  <!-- LOGIN / REGISTER -->
+  <section id="auth-section" class="card">
+    <div class="tabs">
+      <div class="tab active" data-auth-tab="login">Login</div>
+      <div class="tab" data-auth-tab="register">Register</div>
+    </div>
+
+    <!-- Login form -->
+    <div id="login-form">
+      <form id="loginForm">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" required placeholder="alice@example.com" />
+
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" required placeholder="••••••••" />
+
+        <label>Login as</label>
+        <select id="login-role" required>
+          <option value="CUSTOMER">Customer</option>
+          <option value="EMPLOYEE">Employee</option>
+        </select>
+
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div>
+
+    <!-- Register form (UI only for now) -->
+    <div id="register-form" class="section-hidden">
+      <form id="registerForm">
+        <label for="reg-name">Full Name</label>
+        <input id="reg-name" required placeholder="Your Name" />
+
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" required placeholder="you@example.com" />
+
+        <label for="reg-password">Password</label>
+        <input id="reg-password" type="password" required />
+
+        <label>Register as</label>
+        <select id="reg-role">
+          <option value="CUSTOMER">Customer</option>
+          <option value="EMPLOYEE">Employee</option>
+        </select>
+
+        <button type="submit" class="btn">Register (demo)</button>
+      </form>
+      <p class="muted">
+        For now this form just simulates registration in the UI.
+        Later we’ll hook it to the real <code>/auth/register</code> API.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOME PAGE (SERIES LIST) -->
+  <section id="home-section" class="card section-hidden">
+    <div class="grid grid-2">
+      <div>
+        <h2>Series Catalog</h2>
+        <p class="muted">
+          Lists all series with language, genres, production house and next scheduled streaming.
+        </p>
+      </div>
+      <div style="text-align:right">
+        <button class="btn secondary small" id="btn-home-customer-view">Customer View</button>
+        <button class="btn secondary small" id="btn-home-employee-view">Employee Dashboard</button>
+        <button class="btn small" id="btn-home-contracts">Contract Details</button>
+      </div>
+    </div>
+
+    <div id="series-list" class="grid grid-2"></div>
+  </section>
+
+  <!-- CUSTOMER: VIEW & RATE -->
+  <section id="customer-section" class="card section-hidden">
+    <h2>View & Rate (Customer)</h2>
+    <p class="muted">Select a series from the home page to view details and rate it.</p>
+
+    <div id="customer-series-details" class="section-hidden">
+      <h3 id="cust-series-title"></h3>
+      <p id="cust-series-meta" class="muted"></p>
+
+      <h4>Submit Rating</h4>
+      <form id="ratingForm">
+        <label for="rating-value">Rating (1–5)</label>
+        <input id="rating-value" type="number" min="1" max="5" required />
+        <label for="rating-text">Feedback</label>
+        <textarea id="rating-text" placeholder="What did you think?"></textarea>
+        <button type="submit" class="btn small">Submit (demo)</button>
+      </form>
+
+      <h4>Existing Feedback (sample)</h4>
+      <ul id="rating-list"></ul>
+    </div>
+  </section>
+
+  <!-- EMPLOYEE DASHBOARD -->
+  <section id="employee-section" class="card section-hidden">
+    <h2>Employee Dashboard (CRUD Enabled)</h2>
+    <p class="muted">
+      For the project, you will show CREATE/UPDATE/DELETE via API here.
+      For now it’s read-only demo buttons.
+    </p>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Series</th>
+        <th>Language</th>
+        <th>Production House</th>
+        <th>Next Schedule</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="employee-series-table"></tbody>
+    </table>
+  </section>
+
+  <!-- CONTRACT DETAILS -->
+  <section id="contracts-section" class="card section-hidden">
+    <h2>Contract Details</h2>
+    <p class="muted">Employee-only view of contract terms for each series.</p>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Contract ID</th>
+        <th>Series</th>
+        <th>Production House</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Per Episode Charge</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody id="contracts-table"></tbody>
+    </table>
+  </section>
+
+</div>
+
+<script src="main.js"></script>
 </body>
 </html>
